@@ -49,7 +49,7 @@ public class BuildLicenseUtil {
 	 */
 	private void buildLicenseFile(List<ModuleVo> listModuleVo) {
 
-		File file = new File("C:\\License.lic");
+		File file = new File("D:\\License.lic");
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
@@ -225,7 +225,8 @@ public class BuildLicenseUtil {
 		Properties properties = new Properties();
 		try {
 			InputStream inputStream = new FileInputStream(fileName);
-			File file = new File("C:\\License.properties");
+			properties.load(inputStream);
+			File file = new File("D:\\License.properties");
 			if (!file.exists()) {
 				try {
 					file.createNewFile();
@@ -239,7 +240,7 @@ public class BuildLicenseUtil {
             while ((byteread = inputStream.read(buffer)) != -1) {  
                 out.write(buffer, 0, byteread);  
             }  
-            properties.load(inputStream);
+
             
             out.close(); 
             inputStream.close();

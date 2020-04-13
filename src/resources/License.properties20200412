@@ -1,0 +1,41 @@
+//MAC Address :90B11C44FE6F
+//Start Time :2014-01-18
+//End Time :2199-09-09
+
+license.product=DT-BASE,DT-OM,DT-ACAD,DT-ALTD,DT-ERPI,DT-NRM
+license.DT-BASE.product=3000
+license.DT-BASE.module=1000
+license.DT-BASE.version=04
+license.DT-BASE.type=0401
+license.DT-BASE.server=127.0.0.1
+license.DT-BASE.port=3664
+license.DT-OM.product=3000
+license.DT-OM.module=1001
+license.DT-OM.version=04
+license.DT-OM.type=0401
+license.DT-OM.server=127.0.0.1
+license.DT-OM.port=3664
+license.DT-ACAD.product=3000
+license.DT-ACAD.module=1201
+license.DT-ACAD.version=04
+license.DT-ACAD.type=0401
+license.DT-ACAD.server=127.0.0.1
+license.DT-ACAD.port=3664
+license.DT-ALTD.product=3000
+license.DT-ALTD.module=1212
+license.DT-ALTD.version=04
+license.DT-ALTD.type=0401
+license.DT-ALTD.server=127.0.0.1
+license.DT-ALTD.port=3664
+license.DT-ERPI.product=3000
+license.DT-ERPI.module=1004
+license.DT-ERPI.version=04
+license.DT-ERPI.type=0401
+license.DT-ERPI.server=127.0.0.1
+license.DT-ERPI.port=3664
+license.DT-NRM.product=3000
+license.DT-NRM.module=1005
+license.DT-NRM.version=04
+license.DT-NRM.type=0401
+license.DT-NRM.server=127.0.0.1
+license.DT-NRM.port=3664
