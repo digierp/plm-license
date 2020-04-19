@@ -1,4 +1,4 @@
-package com.plm;
+package com.digiwin.plm.plmlicense.component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

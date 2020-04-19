@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html data-layout-decorate="~{common/common-layout}">
+<head>
+<title>INDEX</title>
+</head>
+<body>
+<div class="container" data-layout-fragment="content">
+	<div class="card" style="margin-top: 16%;">
+		<div class="card-header">
+			PLM LICENSE生成
+		</div>
+		<div class="card-body">
+			<form data-th-object="${registerInfo}" data-th-action="@{/generator}" method="post" type="">
+				<div class="form-group">
+					<label for="beginDate">开始日期</label>
+					<input type="text" name="startDate" data-th-value="*{startDate}" class="form-control" data-th-classappend="${startDateMessage}?is-invalid:''" id="beginDate">
+					<div class="invalid-feedback" data-th-text="${startDateMessage}">
+						开始时间不能为空
+					</div>
+					<small id="beginDateHelp" class="form-text text-muted">请输入license的开始时间，如:2020-04-04</small>
+				</div>
+				<div class="form-group">
+					<label for="endDate">到期日期</label>
+					<input type="text" name="endDate" data-th-value="*{endDate}" class="form-control" data-th-classappend="${endDateMessage}?is-invalid:''" id="endDate">
+					<div class="invalid-feedback" data-th-text="${endDateMessage}">
+						到期时间不能为空
+					</div>
+					<small id="endDateHelp" class="form-text text-muted">请输入license的到期时间，如:2020-12-04</small>
+				</div>
+				<div class="form-group">
+					<label for="macAddr">MAC地址</label>
+					<input type="text" name="mac" data-th-value="*{mac}" class="form-control" data-th-classappend="${macMessage}?is-invalid:''" id="macAddr">
+					<div class="invalid-feedback" data-th-text="${macMessage}">
+						MAC地址不能为空
+					</div>
+					<small id="macAddrHelp" class="form-text text-muted">请输入PLM服务器的MAC地址,注意不要中横线， 如：00E04C4AEFD7</small>
+				</div>
+				<div class="form-group">
+					<label for="userCount">用户数量</label>
+					<input type="text" name="users" data-th-value="*{users}" class="form-control" data-th-classappend="${usersMessage}?is-invalid:''" id="userCount">
+					<div class="invalid-feedback" data-th-text="${usersMessage}">
+						用户数量有误
+					</div>
+					<small id="userCountHelp" class="form-text text-muted">请输入用户数,必须是4位的长度，不少，不能多, 如：0005</small>
+				</div>
+				<button type="submit" class="btn btn-primary">生成PLM License</button>
+			</form>
+		</div>
+	</div>
+</div>
+</body>
+</html>

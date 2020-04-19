@@ -1,43 +1,27 @@
-package com.plm;
+package com.digiwin.plm.plmlicense.component;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import Rijndael.Rijndael_Algorithm;
+import org.springframework.core.io.ClassPathResource;
+
+import java.io.*;
 import java.security.InvalidKeyException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
-import Rijndael.Rijndael_Algorithm;
 
 public class BuildLicenseUtil {
 
 	private static final char[] HEX_DIGITS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D',
 			'E', 'F' };
 
-	public void genericLicenseFile(String fileName,ModuleVo module) {
+	public File genericLicenseFile(String licFilePath, ModuleVo module) throws IOException {
 		// 读取licence.properties文件
-		Properties properties = readLicenseFile(fileName);
-
-		// 将license.properties文件转换成List<ModuleVo>对象
-		/*
-		 * ModuleVo module = new ModuleVo(); 
-		 * module.setMac("90B11C44FE6F");
-		 * module.setStartDate("2014-01-18"); 
-		 * module.setEndDate("2063-08-02");
-		 * module.setUsers("0005");
-		 */
+		Properties properties = readLicenseFile();
 		List<ModuleVo> listModuleVo = conversionToListModule(properties, module);
 		// 对listModule进行加密
 		encryption(listModuleVo);
-
 		// 构建licenseFile
-		buildLicenseFile(listModuleVo);
+		return buildLicenseFile(licFilePath, listModuleVo);
 
 	}
 
@@ -47,9 +31,10 @@ public class BuildLicenseUtil {
 	 * @param listModuleVo
 	 * @throws IOException
 	 */
-	private void buildLicenseFile(List<ModuleVo> listModuleVo) {
+	private File buildLicenseFile(String licFilePath, List<ModuleVo> listModuleVo) throws IOException {
 
-		File file = new File("D:\\License.lic");
+		File file = new File(licFilePath);
+
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
@@ -57,10 +42,9 @@ public class BuildLicenseUtil {
 				System.out.println("创建文件失败");
 			}
 		} 
-        // 打开一个写文件器，构造函数中的第二个参数true表示以追加形式写文件  
-        
-		try {
-			FileWriter writer = new FileWriter(file, true);
+        // 打开一个写文件器，构造函数中的第二个参数true表示以追加形式写文件
+		try (FileWriter writer = new FileWriter(file, true)){
+
 			for(ModuleVo moduleVo:listModuleVo){
 	        	writer.write(moduleVo.getType()+"\r\n");  
 	        	writer.write(moduleVo.getProduct()+"\r\n");  
@@ -68,11 +52,10 @@ public class BuildLicenseUtil {
 	        	writer.write(moduleVo.getVersion()+"\r\n");  
 	        	writer.write(moduleVo.getCipher()+"\r\n");  
 	        }
-	        writer.close();  
-		} catch (IOException e) {
-			System.out.println("文件写入失败！");
-		} 
-        
+			writer.flush();
+		}
+
+		return file;
 		
 
 	}
@@ -126,9 +109,8 @@ public class BuildLicenseUtil {
 
 	/**
 	 * 这是取得前半部分加密
-	 * 
-	 * @param moduleVo
-	 * @param keys
+	 *
+	 * @param key
 	 * @return
 	 */
 	private String getFrontSecret(String key) {
@@ -216,40 +198,14 @@ public class BuildLicenseUtil {
 
 	/**
 	 * 读取对应的license.properties文件
-	 * 
-	 * @param fileName
+	 *
 	 * @return
 	 */
-	private Properties readLicenseFile(String fileName) {
-
+	private Properties readLicenseFile() throws IOException {
 		Properties properties = new Properties();
-		try {
-			InputStream inputStream = new FileInputStream(fileName);
-			File file = new File("D:\\License.properties");
-			if (!file.exists()) {
-				try {
-					file.createNewFile();
-				} catch (IOException e) {
-					System.out.println("创建文件失败");
-				}
-			} 
-			OutputStream out = new FileOutputStream(file);  
-			int byteread = 0; // 读取的字节数  
-            byte[] buffer = new byte[1024];  
-            while ((byteread = inputStream.read(buffer)) != -1) {  
-                out.write(buffer, 0, byteread);  
-            }  
-            properties.load(inputStream);
-            
-            out.close(); 
-            inputStream.close();
-			
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found !!-by liuhao");
-		} catch (IOException e) {
-			e.printStackTrace();
+		try (InputStream inputStream = new ClassPathResource("License.properties").getInputStream()){
+			properties.load(inputStream);
 		}
-
 		return properties;
 	}
 
